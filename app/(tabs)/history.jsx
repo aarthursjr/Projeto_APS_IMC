@@ -3,13 +3,13 @@ import { ScrollView, Text } from "react-native";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
 
-export default function HomeScreen({ navigation }) {
+export default function History({ navigation }) {
   return (
     <ScrollView>
       <Header
         image={"../assets/logo-64x64.png"}
-        title="Meu IMC"
-        subtitle="Gerencie seu índice de massa corporal"
+        title="Histórico"
+        subtitle="Veja seus registros anteriores de índice de massa corporal"
       />
       <Card
         icon = {Info}

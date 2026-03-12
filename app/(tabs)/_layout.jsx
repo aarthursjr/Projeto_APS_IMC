@@ -15,8 +15,8 @@ const tabs = {
     title: "Histórico",
     icon: History,
   },
-  info: {
-    title: "Informações",
+  about: {
+    title: "Sobre",
     icon: Info,
   },
 };
