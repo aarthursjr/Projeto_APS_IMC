@@ -1,18 +1,16 @@
-import { Title, View } from "react-native";
-import style from "./style";
+import { Text, View } from "react-native";
+import { style } from "./style";
 
 export default function Card({ icon: Icon, ...props }) {
   return (
-    <View style={ props.secondary ? style.secondary : style.primary}>
+    <View style={props.secondary ? style.secondary : style.primary}>
       <View>
         {Icon && (
-            <Icon size={props.iconSize ?? 24} color={props.iconColor ?? "#000"} />
+          <Icon size={props.iconSize ?? 24} color={props.iconColor ?? "#000"} />
         )}
-        <Title>{props.title}</Title>
+        <Text style={style.title}>{props.title}</Text>
       </View>
-      <View>
-        {props.children}
-      </View>
+      <View>{props.children}</View>
     </View>
   );
 }

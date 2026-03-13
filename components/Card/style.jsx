@@ -1,10 +1,14 @@
-import Colors from '../../constants/theme'
+import { Colors } from "../../constants/theme";
 
-export default style = {
-    primary: {
-        backgroundColor: Colors.backgroundColor
-    },
-    secondary: {
-        backgroundColor: Colors.secondary
-    }
-}
+export const style = {
+  primary: {
+    backgroundColor: Colors.background,
+  },
+  secondary: {
+    backgroundColor: Colors.secondary,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+};
