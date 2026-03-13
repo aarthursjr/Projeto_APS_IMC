@@ -6,7 +6,7 @@ export default function Content({ children }) {
   return (
     <ScrollView style={styles.container}>
       <Header
-        image={"../assets/logo-64x64.png"}
+        image={require("../../assets/images/logo-64x64.png")}
         title="Meu IMC"
         subtitle="Gerencie seu índice de massa corporal"
       />

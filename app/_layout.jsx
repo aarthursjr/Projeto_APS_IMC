@@ -8,7 +8,7 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <>
-      <StatusBar translucent={false} />
+      <StatusBar style="auto" translucent={false} />
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>

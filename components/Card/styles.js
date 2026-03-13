@@ -12,8 +12,8 @@ export const styles = {
   variants: {
     primary: {
       backgroundColor: Colors.surface,
-      elevation: 5,
-      shadowColor: Colors.textPrimary,
+      elevation: 10,
+      shadowColor: Colors.textTertiary,
     },
     secondary: {
       backgroundColor: Colors.primaryLighter,

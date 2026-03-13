@@ -6,6 +6,7 @@ export const Colors = {
   accent: "#5AD2E8",
   textPrimary: "#052105",
   textSecondary: "#445944",
+  textTertiary: "#829082",
   background: "#F1FDF2",
   surface: "#ffffff",
   error: "#b00020",
