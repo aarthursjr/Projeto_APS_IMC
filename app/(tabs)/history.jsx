@@ -11,29 +11,22 @@ export default function History({ navigation }) {
         title="Histórico"
         subtitle="Veja seus registros anteriores de índice de massa corporal"
       />
-      <Card
-        icon = {Info}
-        title="Como estou hoje"
-      >
+      <Card icon={Info} title="Como estou hoje">
         <Text>
-          Calcule e acompanhe seu índice de massa corporal de forma fácil e rápida.
+          Calcule e acompanhe seu índice de massa corporal de forma fácil e
+          rápida.
         </Text>
       </Card>
-      <Card
-        icon = {HistoryIcon}
-        title="Últimos registros"
-      >
+      <Card icon={HistoryIcon} title="Últimos registros">
         <Text>
-          Calcule e acompanhe seu índice de massa corporal de forma fácil e rápida.
+          Calcule e acompanhe seu índice de massa corporal de forma fácil e
+          rápida.
         </Text>
       </Card>
-      <Card
-        icon = {Bulb}
-        title="Dica"
-        secondary
-      >
+      <Card icon={Bulb} title="Dica" variant="secondary">
         <Text>
-          Calcule e acompanhe seu índice de massa corporal de forma fácil e rápida.
+          Calcule e acompanhe seu índice de massa corporal de forma fácil e
+          rápida.
         </Text>
       </Card>
     </ScrollView>

@@ -1,11 +1,11 @@
 import { Text, TouchableOpacity } from "react-native";
 import { Colors } from "../../constants/theme";
-import { style } from "./style";
+import { styles } from "./styles";
 
 export default function Tab({ icon: Icon, ...props }) {
   return (
     <TouchableOpacity
-      style={props.active ? style.navItemActive : style.navItem}
+      style={props.active ? styles.navItemActive : styles.navItem}
       onPress={props.onPress}
     >
       {Icon && (
@@ -14,7 +14,7 @@ export default function Tab({ icon: Icon, ...props }) {
           color={props.iconColor ?? Colors.textPrimary}
         />
       )}
-      <Text style={style.navItemLabel}>{props.title}</Text>
+      <Text style={styles.navItemLabel}>{props.title}</Text>
     </TouchableOpacity>
   );
 }

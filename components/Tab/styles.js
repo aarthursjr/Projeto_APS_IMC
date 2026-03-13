@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   navItem: {
     flexDirection: "column",
     alignItems: "center",

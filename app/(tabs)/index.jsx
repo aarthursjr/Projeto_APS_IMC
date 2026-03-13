@@ -1,16 +1,12 @@
-import { Bulb, Gauge, History } from "lucide-react-native";
-import { ScrollView, Text } from "react-native";
+import { Gauge, History, Lightbulb } from "lucide-react-native";
+import { Text } from "react-native";
 import Card from "../../components/Card";
-import Header from "../../components/Header";
+import Content from "../../components/Content";
+import { Colors } from "../../constants/theme";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <ScrollView>
-      <Header
-        image={"../assets/logo-64x64.png"}
-        title="Meu IMC"
-        subtitle="Gerencie seu índice de massa corporal"
-      />
+    <Content>
       <Card icon={Gauge} title="Como estou hoje">
         <Text>
           Calcule e acompanhe seu índice de massa corporal de forma fácil e
@@ -23,12 +19,17 @@ export default function HomeScreen({ navigation }) {
           rápida.
         </Text>
       </Card>
-      <Card icon={Bulb} title="Dica" secondary>
+      <Card
+        icon={Lightbulb}
+        iconColor={Colors.accent}
+        title="Dica"
+        variant="secondary"
+      >
         <Text>
           O IMC é um indicador de peso ideal. Faça registros diários e procure
           se manter na zona verde para uma vida mais saudável.
         </Text>
       </Card>
-    </ScrollView>
+    </Content>
   );
 }
