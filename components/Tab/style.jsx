@@ -1,4 +1,4 @@
-export default styles = {
+export default style = {
     navItem: {
         flexDirection: "column",
         alignItems: "center",

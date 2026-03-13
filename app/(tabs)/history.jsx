@@ -1,4 +1,4 @@
-import { Bulb, History, Info } from "lucide-react-native";
+import { Bulb, History as HistoryIcon, Info } from "lucide-react-native";
 import { ScrollView, Text } from "react-native";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
@@ -20,7 +20,7 @@ export default function History({ navigation }) {
         </Text>
       </Card>
       <Card
-        icon = {History}
+        icon = {HistoryIcon}
         title="Últimos registros"
       >
         <Text>
