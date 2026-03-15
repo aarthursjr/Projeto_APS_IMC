@@ -1,11 +1,16 @@
+import { Colors } from "../../constants/theme";
+
 export const styles = {
   navItem: {
     flexDirection: "column",
     alignItems: "center",
     padding: 10,
   },
-  navItemActive: {
-    flexDirection: "column",
-    alignItems: "center",
+  navItemLabel: {
+    fontSize: 12,
+  },
+  navItemActiveLabel: {
+    fontWeight: "bold",
+    color: Colors.primary,
   },
 };

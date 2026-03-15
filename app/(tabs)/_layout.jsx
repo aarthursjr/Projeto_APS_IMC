@@ -38,7 +38,7 @@ export default function TabLayout() {
                 {...props}
                 title={config.title}
                 icon={config.icon}
-                active={props.accessibilityState?.selected}
+                active={props["aria-selected"]}
               />
             ),
           }}
