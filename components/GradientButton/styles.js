@@ -5,7 +5,7 @@ export const styles = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    height: 64,
+    height: 48,
     borderRadius: 8,
   },
   buttonText: {

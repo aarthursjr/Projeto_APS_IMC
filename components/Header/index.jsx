@@ -5,8 +5,10 @@ export default function Header({ image, title, subtitle }) {
   return (
     <View style={styles.header}>
       {image && <Image source={image} style={styles.image} />}
-      <Text style={styles.title}>{title}</Text>
-      {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+      <View>
+        <Text style={styles.title}>{title}</Text>
+        {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+      </View>
     </View>
   );
 }

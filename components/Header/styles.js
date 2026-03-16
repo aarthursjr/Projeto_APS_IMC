@@ -2,17 +2,20 @@ import { Colors } from "../../constants/theme";
 
 export const styles = {
   header: {
+    flex: 1,
+    flexDirection: "row",
     alignItems: "center",
-    padding: 20,
+    gap: 16,
+    marginVertical: 20,
   },
   image: {
     width: 64,
     height: 64,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
-    color: Colors.textPrimary,
+    color: Colors.primary,
   },
   subtitle: {
     fontSize: 16,

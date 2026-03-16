@@ -29,14 +29,12 @@ export const Styles = {
       textAlign: "center",
     },
     classificacao: {
-      marginBottom: 20,
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: "bold",
       textAlign: "center",
       color: Colors.textPrimary,
     },
     pesoIdeal: {
-      textAlign: "center",
       color: Colors.textPrimary,
     },
   },

@@ -6,8 +6,9 @@ export const styles = {
   },
   inputField: {
     flex: 1,
-    height: 64,
-    padding: 16,
+    height: 48,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     marginBottom: 20,
     fontSize: 24,
     backgroundColor: Colors.primaryLighter,

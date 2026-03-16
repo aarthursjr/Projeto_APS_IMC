@@ -1,4 +1,8 @@
-import { Calculator as CalculatorIcon, Lightbulb } from "lucide-react-native";
+import {
+  Calculator as CalculatorIcon,
+  ClipboardCheck,
+  Lightbulb,
+} from "lucide-react-native";
 import { useState } from "react";
 import { Text } from "react-native";
 import Card from "../../components/Card";
@@ -93,10 +97,14 @@ export default function Calculator({ navigation }) {
   function CalcularPesoIdeal(imc, altura) {
     if (imc < 18.5) {
       let pesoIdeal = 18.5 * altura ** 2;
-      setPesoIdealMessage("Peso mínimo ideal: " + pesoIdeal.toFixed(2) + "Kg");
+      setPesoIdealMessage(
+        "Seu peso mínimo ideal é de " + pesoIdeal.toFixed(2) + "Kg",
+      );
     } else if (imc > 24.99) {
       let pesoIdeal = 24.99 * altura ** 2;
-      setPesoIdealMessage("Peso máximo ideal " + pesoIdeal.toFixed(2) + " kg");
+      setPesoIdealMessage(
+        "Seu peso máximo ideal é de " + pesoIdeal.toFixed(2) + "Kg",
+      );
     } else {
       setPesoIdealMessage("Você está no peso ideal. Parabéns!");
     }
@@ -121,12 +129,7 @@ export default function Calculator({ navigation }) {
         />
         <GradientButton title="Calcular meu IMC" onPress={calcularIMC} />
       </Card>
-      <Card
-        icon={Lightbulb}
-        iconColor={Colors.accent}
-        title="Resultado"
-        variant="secondary"
-      >
+      <Card icon={ClipboardCheck} title="Resultado">
         {imc !== 0 ? (
           <Text
             style={[Styles.calculator.imc, { color: imcColors[classificacao] }]}
@@ -139,10 +142,17 @@ export default function Calculator({ navigation }) {
         {classificacao !== "" && (
           <Text style={Styles.calculator.classificacao}>{classificacao}</Text>
         )}
-        {pesoIdealMessage !== "" && (
-          <Text style={Styles.calculator.pesoIdeal}>{pesoIdealMessage}</Text>
-        )}
       </Card>
+      {pesoIdealMessage !== "" && (
+        <Card
+          icon={Lightbulb}
+          iconColor={Colors.accent}
+          title="Dica"
+          variant="secondary"
+        >
+          <Text style={Styles.calculator.pesoIdeal}>{pesoIdealMessage}</Text>
+        </Card>
+      )}
     </Content>
   );
 }
