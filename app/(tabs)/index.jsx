@@ -6,11 +6,28 @@ import Scale from "../../components/Scale";
 import { Colors } from "../../constants/theme";
 
 export default function HomeScreen({ navigation }) {
+  const imc = 22;
   return (
     <Content>
       <Card icon={Gauge} title="Como estou hoje">
-        <Text>
-          <Scale marker="22" />
+        <Scale marker={imc} />
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            textAlign: "center",
+            color: Colors.grade3,
+          }}
+        >
+          {imc}
+        </Text>
+        <Text
+          style={{
+            textAlign: "center",
+            color: Colors.textSecondary,
+          }}
+        >
+          Normal
         </Text>
       </Card>
       <Card icon={History} title="Últimos registros">

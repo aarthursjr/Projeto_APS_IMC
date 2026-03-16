@@ -7,13 +7,16 @@ export const styles = {
     flexDirection: "row",
     justifyContent: "stretch",
     alignItems: "center",
-    height: 8,
+    width: "100%",
+    height: 32,
   },
   scaleBar: {
+    position: "absolute",
     flex: 1,
     flexDirection: "row",
     justifyContent: "stretch",
-    marginTop: 2,
+    top: 2,
+    width: "100%",
     height: 4,
   },
   scaleBarArea: {
@@ -22,17 +25,21 @@ export const styles = {
   scaleSteps: {
     position: "absolute",
     left: 0,
-    flex: 1,
-    flexDirection: 1,
-    justifyContent: "center",
-    alignItems: "center",
     width: "100%",
-    height: 8,
+    height: 32,
+  },
+  scaleStepContainer: {
+    position: "absolute",
   },
   scaleStep: {
-    position: "absolute",
     width: 2,
     height: 8,
+  },
+  scaleStepLabel: {
+    top: 4,
+    left: -6,
+    fontSize: 12,
+    color: Colors.textTertiary,
   },
   scaleMarker: {
     flex: 1,
