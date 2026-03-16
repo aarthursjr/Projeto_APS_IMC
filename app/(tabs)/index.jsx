@@ -10,7 +10,7 @@ export default function HomeScreen({ navigation }) {
     <Content>
       <Card icon={Gauge} title="Como estou hoje">
         <Text>
-          <Scale marker="26" />
+          <Scale marker="22" />
         </Text>
       </Card>
       <Card icon={History} title="Últimos registros">

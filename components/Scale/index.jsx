@@ -2,73 +2,73 @@ import { View } from "react-native";
 import { Colors } from "../../constants/theme";
 import { styles } from "./styles";
 
-export default function Scale({ marker }) {
-  const min = 14;
-  const max = 41;
-  const scaleAreas = [
-    { start: min, end: 17, color: Colors.grade1 },
-    { start: 17, end: 18.5, color: Colors.grade2 },
-    { start: 18.5, end: 25, color: Colors.grade3 },
-    { start: 25, end: 30, color: Colors.grade4 },
-    { start: 30, end: 35, color: Colors.grade5 },
-    { start: 35, end: 40, color: Colors.grade6 },
-    { start: 40, end: max, color: Colors.grade7 },
-  ];
-  const scaleSteps = [15, 20, 25, 30, 35, 40];
-  const markerPosition = ((marker - min) / (max - min)) * 100;
-  const markerArea = scaleAreas.find(
-    (a) => marker >= a.start && marker < a.end,
+const min = 14;
+const max = 41;
+const range = max - min;
+const scalePoints = [min, 17, 18.5, 25, 30, 35, 40, max];
+const scaleAreas = scalePoints.slice(0, -1).map((point, i) => ({
+  // Calcula a porcentagem da largura de cada área na escala
+  width: ((scalePoints[i + 1] - point) / range) * 100 + "%",
+  color: Colors["grade" + (i + 1)],
+}));
+
+const scaleSteps = [15, 20, 25, 30, 35, 40];
+const stepsSettings = scaleSteps.map((step) => {
+  const stepIndex = getScaleIndex(step);
+  return {
+    left: ((step - min) / range) * 100 + "%",
+    color:
+      stepIndex >= 0 ? Colors["grade" + (stepIndex + 1)] : Colors.textPrimary,
+  };
+});
+
+// Identifica em que intervalo entre dois valores de scalePoints o value está
+function getScaleIndex(value) {
+  return scalePoints.findIndex(
+    (point, i) =>
+      i < scalePoints.length - 1 &&
+      value >= point &&
+      value < scalePoints[i + 1],
   );
-  const markerColor = markerArea ? markerArea.color : Colors.textPrimary;
+}
+
+export default function Scale({ marker }) {
+  const markerPosition = ((marker - min) / range) * 100 + "%";
+  const markerIndex = getScaleIndex(marker);
+  const markerColor =
+    markerIndex >= 0 ? Colors["grade" + (markerIndex + 1)] : Colors.textPrimary;
 
   return (
     <View style={styles.scale}>
       <View>
         <View style={styles.scaleBar}>
-          {scaleAreas.map((area, idx) => {
-            const areaWidth = ((area.end - area.start) / (max - min)) * 100;
+          {scaleAreas.map((area, i) => {
             return (
               <View
-                key={idx}
+                key={i}
                 style={[
                   styles.scaleBarArea,
-                  {
-                    width: areaWidth + "%",
-                    backgroundColor: area.color,
-                  },
+                  { width: area.width, backgroundColor: area.color },
                 ]}
               />
             );
           })}
         </View>
         <View style={styles.scaleSteps}>
-          {scaleSteps.map((step) => {
-            const area = scaleAreas.find(
-              (a) => step >= a.start && step < a.end,
-            );
-            const color = area ? area.color : Colors.textPrimary;
-            const left = ((step - min) / (max - min)) * 100;
-            return (
-              <View
-                key={step}
-                style={[
-                  styles.scaleStep,
-                  {
-                    left: left + "%",
-                    backgroundColor: color,
-                  },
-                ]}
-              />
-            );
-          })}
+          {stepsSettings.map((step, i) => (
+            <View
+              key={i}
+              style={[
+                styles.scaleStep,
+                { left: step.left, backgroundColor: step.color },
+              ]}
+            />
+          ))}
         </View>
         <View
           style={[
             styles.scaleMarker,
-            {
-              left: markerPosition + "%",
-              backgroundColor: markerColor,
-            },
+            { left: markerPosition, backgroundColor: markerColor },
           ]}
         ></View>
       </View>
