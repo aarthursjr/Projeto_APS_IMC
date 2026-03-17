@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 import { styles } from "./styles";
 
 export default function Card({ icon: Icon, ...props }) {
@@ -9,7 +9,7 @@ export default function Card({ icon: Icon, ...props }) {
         {Icon && (
           <Icon
             size={props.iconSize ?? 24}
-            color={props.iconColor ?? Colors.primary}
+            color={props.iconColor ?? colors.primary}
           />
         )}
         <Text style={styles.title}>{props.title}</Text>

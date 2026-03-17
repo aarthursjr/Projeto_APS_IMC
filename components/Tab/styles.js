@@ -1,4 +1,4 @@
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 
 export const styles = {
   navItem: {
@@ -11,6 +11,6 @@ export const styles = {
   },
   navItemActiveLabel: {
     fontWeight: "bold",
-    color: Colors.primary,
+    color: colors.primary,
   },
 };

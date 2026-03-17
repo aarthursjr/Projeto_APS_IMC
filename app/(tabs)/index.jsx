@@ -3,7 +3,8 @@ import { Text } from "react-native";
 import Card from "../../components/Card";
 import Content from "../../components/Content";
 import Scale from "../../components/Scale";
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
+import { getIMCColor } from "../../utils/imc";
 
 export default function HomeScreen({ navigation }) {
   const imc = 22;
@@ -16,7 +17,7 @@ export default function HomeScreen({ navigation }) {
             fontSize: 24,
             fontWeight: "bold",
             textAlign: "center",
-            color: Colors.grade3,
+            color: getIMCColor(imc),
           }}
         >
           {imc}
@@ -24,7 +25,7 @@ export default function HomeScreen({ navigation }) {
         <Text
           style={{
             textAlign: "center",
-            color: Colors.textSecondary,
+            color: colors.textSecondary,
           }}
         >
           Normal
@@ -38,7 +39,7 @@ export default function HomeScreen({ navigation }) {
       </Card>
       <Card
         icon={Lightbulb}
-        iconColor={Colors.accent}
+        iconColor={colors.accent}
         title="Dica"
         variant="secondary"
       >

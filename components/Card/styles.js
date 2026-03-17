@@ -1,4 +1,4 @@
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 
 export const styles = {
   card: {
@@ -11,12 +11,12 @@ export const styles = {
   },
   variants: {
     primary: {
-      backgroundColor: Colors.surface,
+      backgroundColor: colors.surface,
       elevation: 10,
-      shadowColor: Colors.textTertiary,
+      shadowColor: colors.textTertiary,
     },
     secondary: {
-      backgroundColor: Colors.primaryLighter,
+      backgroundColor: colors.primaryLighter,
     },
   },
   titleContainer: {
@@ -28,6 +28,6 @@ export const styles = {
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    color: Colors.textPrimary,
+    color: colors.textPrimary,
   },
 };

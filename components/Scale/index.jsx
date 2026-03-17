@@ -1,55 +1,43 @@
 import { Text, View } from "react-native";
-import { Colors } from "../../constants/theme";
+import { imc_ranges } from "../../constants/imc";
+import { getIMCColor } from "../../utils/imc";
 import { styles } from "./styles";
 
-const min = 14;
-const max = 41;
-const range = max - min;
-const scalePoints = [min, 17, 18.5, 25, 30, 35, 40, max];
-const scaleSteps = [15, 20, 25, 30, 35, 40];
+const scale_padding = 1; // Espaço extra no início e fim da escala
+const scale_steps = [15, 20, 25, 30, 35, 40]; // Marcadores da escala
+const min = scale_steps[0] - scale_padding; // Ponto mínimo da escala
+const max = scale_steps[scale_steps.length - 1] + scale_padding; // Ponto máximo da escala
+const range = max - min; // Extensão da escala
+const scale_points = [min, ...imc_ranges.slice(0, -1).map((r) => r.max), max]; // Pontos que delimitam as áreas coloridas
 
 // Calcula a porcentagem de value na escala
 function toPercent(value, start = min) {
   return ((value - start) / range) * 100 + "%";
 }
 
-// Identifica em que intervalo value está
-function getScaleIndex(value) {
-  return scalePoints.findIndex(
-    (point, i) =>
-      i < scalePoints.length - 1 &&
-      value >= point &&
-      value < scalePoints[i + 1],
-  );
-}
-
-// Retorna a cor correspondente de value
-function getScaleColor(value) {
-  const index = getScaleIndex(value);
-  return index >= 0 ? Colors["grade" + (index + 1)] : Colors.textPrimary;
-}
-
 export default function Scale({ marker }) {
-  const markerColor = getScaleColor(marker);
+  const marker_color = getIMCColor(marker);
 
   return (
     <View style={styles.scale}>
       <View style={styles.scaleBar}>
-        {scalePoints.slice(0, -1).map((point, i) => (
+        {scale_points.slice(0, -1).map((point, i) => (
           <View
             key={i}
             style={[
               styles.scaleBarArea,
               {
-                width: toPercent(scalePoints[i + 1], point),
-                backgroundColor: Colors["grade" + (i + 1)],
+                width: toPercent(scale_points[i + 1], point),
+                backgroundColor:
+                  imc_ranges[i]?.color ??
+                  imc_ranges[imc_ranges.length - 1].color,
               },
             ]}
           />
         ))}
       </View>
       <View style={styles.scaleSteps}>
-        {scaleSteps.map((step, i) => (
+        {scale_steps.map((step, i) => (
           <View
             key={step}
             style={[styles.scaleStepContainer, { left: toPercent(step) }]}
@@ -59,7 +47,7 @@ export default function Scale({ marker }) {
               style={[
                 styles.scaleStep,
                 {
-                  backgroundColor: getScaleColor(step),
+                  backgroundColor: getIMCColor(step),
                 },
               ]}
             ></View>
@@ -70,7 +58,7 @@ export default function Scale({ marker }) {
       <View
         style={[
           styles.scaleMarker,
-          { left: toPercent(marker), backgroundColor: markerColor },
+          { left: toPercent(marker), backgroundColor: marker_color },
         ]}
       ></View>
     </View>

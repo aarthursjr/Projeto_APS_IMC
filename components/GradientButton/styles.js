@@ -1,4 +1,4 @@
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 
 export const styles = {
   buttonWrapper: {
@@ -12,6 +12,6 @@ export const styles = {
     fontSize: 18,
     letterSpacing: 0.7,
     fontWeight: "bold",
-    color: Colors.surface,
+    color: colors.surface,
   },
 };

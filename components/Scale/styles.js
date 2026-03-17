@@ -1,4 +1,4 @@
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 
 export const styles = {
   scale: {
@@ -23,8 +23,6 @@ export const styles = {
     height: 4,
   },
   scaleSteps: {
-    position: "absolute",
-    left: 0,
     width: "100%",
     height: 32,
   },
@@ -39,19 +37,20 @@ export const styles = {
     top: 4,
     left: -6,
     fontSize: 12,
-    color: Colors.textTertiary,
+    color: colors.textTertiary,
   },
   scaleMarker: {
+    position: "absolute",
+    top: -6,
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
-    top: -6,
     width: 20,
     height: 20,
     borderWidth: 2,
     borderRadius: "50%",
-    borderColor: Colors.surface,
+    borderColor: colors.surface,
+    transform: [{ translateX: "-50%" }],
   },
 };

@@ -1,4 +1,4 @@
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 
 export const styles = {
   header: {
@@ -15,10 +15,10 @@ export const styles = {
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: Colors.primary,
+    color: colors.primary,
   },
   subtitle: {
     fontSize: 16,
-    color: Colors.textSecondary,
+    color: colors.textSecondary,
   },
 };

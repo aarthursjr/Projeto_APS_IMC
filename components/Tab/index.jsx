@@ -1,9 +1,9 @@
 import { Text, TouchableOpacity } from "react-native";
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 import { styles } from "./styles";
 
 export default function Tab({ icon: Icon, ...props }) {
-  const iconColor = props.active ? Colors.primary : Colors.textPrimary;
+  const iconColor = props.active ? colors.primary : colors.textPrimary;
 
   return (
     <TouchableOpacity style={styles.navItem} onPress={props.onPress}>

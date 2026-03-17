@@ -1,7 +1,7 @@
 import {
-  Calculator as CalculatorIcon,
-  ClipboardCheck,
-  Lightbulb,
+    Calculator as CalculatorIcon,
+    ClipboardCheck,
+    Lightbulb,
 } from "lucide-react-native";
 import { useState } from "react";
 import { Text } from "react-native";
@@ -9,7 +9,7 @@ import Card from "../../components/Card";
 import Content from "../../components/Content";
 import FormInput from "../../components/FormInput";
 import GradientButton from "../../components/GradientButton";
-import { Colors, Styles } from "../../constants/theme";
+import { colors, styles } from "../../constants/theme";
 
 export default function Calculator({ navigation }) {
   const [peso, setPeso] = useState(0);
@@ -17,14 +17,14 @@ export default function Calculator({ navigation }) {
   const [imc, setImc] = useState(0);
   const [classificacao, setClassificacao] = useState("");
   const [pesoIdealMessage, setPesoIdealMessage] = useState("");
-  const imcColors = {
-    "Muito abaixo do peso": Colors.grade1,
-    "Abaixo do peso": Colors.grade2,
-    "Peso normal": Colors.grade3,
-    Sobrepeso: Colors.grade4,
-    "Obesidade I": Colors.grade5,
-    "Obesidade II": Colors.grade6,
-    "Obesidade III": Colors.grade7,
+  const imccolors = {
+    "Muito abaixo do peso": colors.grade1,
+    "Abaixo do peso": colors.grade2,
+    "Peso normal": colors.grade3,
+    Sobrepeso: colors.grade4,
+    "Obesidade I": colors.grade5,
+    "Obesidade II": colors.grade6,
+    "Obesidade III": colors.grade7,
   };
 
   function formataAltura(alturaDigitada) {
@@ -90,11 +90,11 @@ export default function Calculator({ navigation }) {
 
     setImc(imcValor);
     setClassificacao(classe);
-    CalcularPesoIdeal(imcValor, altura);
+    calcularPesoIdeal(imcValor, altura);
   }
 
   //Cáculo do peso ideal
-  function CalcularPesoIdeal(imc, altura) {
+  function calcularPesoIdeal(imc, altura) {
     if (imc < 18.5) {
       let pesoIdeal = 18.5 * altura ** 2;
       setPesoIdealMessage(
@@ -132,7 +132,7 @@ export default function Calculator({ navigation }) {
       <Card icon={ClipboardCheck} title="Resultado">
         {imc !== 0 ? (
           <Text
-            style={[Styles.calculator.imc, { color: imcColors[classificacao] }]}
+            style={[styles.calculator.imc, { color: imccolors[classificacao] }]}
           >
             {imc}
           </Text>
@@ -140,17 +140,17 @@ export default function Calculator({ navigation }) {
           <Text>O resultado do cálculo do seu IMC irá aparecer aqui.</Text>
         )}
         {classificacao !== "" && (
-          <Text style={Styles.calculator.classificacao}>{classificacao}</Text>
+          <Text style={styles.calculator.classificacao}>{classificacao}</Text>
         )}
       </Card>
       {pesoIdealMessage !== "" && (
         <Card
           icon={Lightbulb}
-          iconColor={Colors.accent}
+          iconColor={colors.accent}
           title="Dica"
           variant="secondary"
         >
-          <Text style={Styles.calculator.pesoIdeal}>{pesoIdealMessage}</Text>
+          <Text style={styles.calculator.pesoIdeal}>{pesoIdealMessage}</Text>
         </Card>
       )}
     </Content>

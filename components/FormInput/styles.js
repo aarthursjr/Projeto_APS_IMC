@@ -1,8 +1,8 @@
-import { Colors } from "../../constants/theme";
+import { colors } from "../../constants/theme";
 
 export const styles = {
   inputLabel: {
-    color: Colors.textPrimary,
+    color: colors.textPrimary,
   },
   inputField: {
     flex: 1,
@@ -11,7 +11,7 @@ export const styles = {
     paddingVertical: 8,
     marginBottom: 20,
     fontSize: 24,
-    backgroundColor: Colors.primaryLighter,
+    backgroundColor: colors.primaryLighter,
     borderRadius: 8,
   },
 };

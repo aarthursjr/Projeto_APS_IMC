@@ -1,4 +1,4 @@
-export const Colors = {
+export const colors = {
   primary: "#00B206",
   primaryLight: "#C2EEC3",
   primaryLighter: "#E6F2E7",
@@ -20,7 +20,7 @@ export const Colors = {
   grade7: "#D62828",
 };
 
-export const Styles = {
+export const styles = {
   calculator: {
     imc: {
       fontSize: 48,
@@ -32,10 +32,10 @@ export const Styles = {
       fontSize: 20,
       fontWeight: "bold",
       textAlign: "center",
-      color: Colors.textPrimary,
+      color: colors.textPrimary,
     },
     pesoIdeal: {
-      color: Colors.textPrimary,
+      color: colors.textPrimary,
     },
   },
 };
