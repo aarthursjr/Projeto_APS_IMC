@@ -28,13 +28,13 @@ export const styles = {
       fontWeight: "bold",
       textAlign: "center",
     },
-    classificacao: {
+    classification: {
       fontSize: 20,
       fontWeight: "bold",
       textAlign: "center",
       color: colors.textPrimary,
     },
-    pesoIdeal: {
+    idealWeight: {
       color: colors.textPrimary,
     },
   },

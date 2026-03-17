@@ -1,5 +1,21 @@
 import { imc_ranges } from "../constants/imc";
 
+export function calculateIMC(peso, altura) {
+  if (!peso || !altura) return;
+
+  if (peso <= 0 || isNaN(peso)) {
+    console.log("Valor inválido");
+    return;
+  }
+
+  if (altura <= 0 || isNaN(altura)) {
+    console.log("Valor inválido");
+    return;
+  }
+
+  return Number((peso / altura ** 2).toFixed(2));
+}
+
 export function classifyIMC(imc) {
   switch (true) {
     case imc < 17.0:

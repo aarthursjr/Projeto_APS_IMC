@@ -4,7 +4,7 @@ import Card from "../../components/Card";
 import Content from "../../components/Content";
 import Scale from "../../components/Scale";
 import { colors } from "../../constants/theme";
-import { getIMCColor } from "../../utils/imc";
+import { classifyIMC, getIMCColor } from "../../utils/imc";
 
 export default function HomeScreen({ navigation }) {
   const imc = 22;
@@ -28,7 +28,7 @@ export default function HomeScreen({ navigation }) {
             color: colors.textSecondary,
           }}
         >
-          Normal
+          {classifyIMC(imc)}
         </Text>
       </Card>
       <Card icon={History} title="Últimos registros">

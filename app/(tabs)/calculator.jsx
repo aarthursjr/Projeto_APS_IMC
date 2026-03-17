@@ -1,7 +1,7 @@
 import {
-    Calculator as CalculatorIcon,
-    ClipboardCheck,
-    Lightbulb,
+  Calculator as CalculatorIcon,
+  ClipboardCheck,
+  Lightbulb,
 } from "lucide-react-native";
 import { useState } from "react";
 import { Text } from "react-native";
@@ -10,104 +10,47 @@ import Content from "../../components/Content";
 import FormInput from "../../components/FormInput";
 import GradientButton from "../../components/GradientButton";
 import { colors, styles } from "../../constants/theme";
+import {
+  calculateIMC,
+  classifyIMC,
+  getIdealWeight,
+  getIMCColor,
+} from "../../utils/imc";
 
 export default function Calculator({ navigation }) {
-  const [peso, setPeso] = useState(0);
-  const [altura, setAltura] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const [imc, setImc] = useState(0);
-  const [classificacao, setClassificacao] = useState("");
-  const [pesoIdealMessage, setPesoIdealMessage] = useState("");
-  const imccolors = {
-    "Muito abaixo do peso": colors.grade1,
-    "Abaixo do peso": colors.grade2,
-    "Peso normal": colors.grade3,
-    Sobrepeso: colors.grade4,
-    "Obesidade I": colors.grade5,
-    "Obesidade II": colors.grade6,
-    "Obesidade III": colors.grade7,
-  };
+  const [classification, setClassification] = useState("");
+  const [idealWeightMessage, setWeightIdealMessage] = useState("");
+  const [imcColor, setImcColor] = useState("");
 
-  function formataAltura(alturaDigitada) {
-    let valor = alturaDigitada.replace(/,/g, ".");
-    valor = valor.replace(/[^0-9]/g, ""); // Remove tudo exceto números
-    if (valor.length === 0) {
-      setAltura(0);
+  function formatHeight(heightInput) {
+    let value = heightInput.replace(/,/g, ".");
+    value = value.replace(/[^0-9]/g, ""); // Remove tudo exceto números
+    if (value.length === 0) {
+      setHeight(0);
       return;
     }
     // Garante que só tenha até 1 dígito antes do ponto
-    if (valor.length > 1) {
-      valor = valor.slice(0, 1) + "." + valor.slice(1, 3); // até 2 casas decimais
+    if (value.length > 1) {
+      value = value.slice(0, 1) + "." + value.slice(1, 3); // até 2 casas decimais
     }
 
-    setAltura(valor);
+    setHeight(value);
   }
 
-  //Classificação do IMC
-  function classificarIMC(imc) {
-    switch (true) {
-      case imc < 17.0:
-        return "Muito abaixo do peso";
+  //Cálculo e exibição do resultado
+  function showIMCResult() {
+    const imc_value = calculateIMC(weight, height);
+    const imc_class = classifyIMC(imc_value);
+    const imc_color = getIMCColor(imc_value);
+    const ideal_weight = getIdealWeight(imc_value, height);
 
-      case imc >= 17.0 && imc <= 18.49:
-        return "Abaixo do peso";
-
-      case imc >= 18.5 && imc <= 24.99:
-        return "Peso normal";
-
-      case imc >= 25.0 && imc <= 29.99:
-        return "Sobrepeso";
-
-      case imc >= 30.0 && imc <= 34.99:
-        return "Obesidade I";
-
-      case imc >= 35.0 && imc <= 39.99:
-        return "Obesidade II";
-
-      case imc > 39.99:
-        return "Obesidade III";
-
-      default:
-        return "";
-    }
-  }
-
-  //Cálculo do IMC
-  function calcularIMC() {
-    if (!peso || !altura) return;
-
-    if (peso <= 0 || isNaN(peso)) {
-      console.log("Valor inválido");
-      return;
-    }
-
-    if (altura <= 0 || isNaN(altura)) {
-      console.log("Valor inválido");
-      return;
-    }
-
-    const imcValor = Number((peso / altura ** 2).toFixed(2));
-    const classe = classificarIMC(imcValor);
-
-    setImc(imcValor);
-    setClassificacao(classe);
-    calcularPesoIdeal(imcValor, altura);
-  }
-
-  //Cáculo do peso ideal
-  function calcularPesoIdeal(imc, altura) {
-    if (imc < 18.5) {
-      let pesoIdeal = 18.5 * altura ** 2;
-      setPesoIdealMessage(
-        "Seu peso mínimo ideal é de " + pesoIdeal.toFixed(2) + "Kg",
-      );
-    } else if (imc > 24.99) {
-      let pesoIdeal = 24.99 * altura ** 2;
-      setPesoIdealMessage(
-        "Seu peso máximo ideal é de " + pesoIdeal.toFixed(2) + "Kg",
-      );
-    } else {
-      setPesoIdealMessage("Você está no peso ideal. Parabéns!");
-    }
+    setImc(imc_value);
+    setClassification(imc_class);
+    setImcColor(imc_color);
+    setWeightIdealMessage(ideal_weight);
   }
 
   return (
@@ -117,40 +60,40 @@ export default function Calculator({ navigation }) {
           label="Peso (Kg)"
           placeholder="Ex: 70"
           keyboardType="numeric"
-          value={peso}
-          onChangeText={setPeso}
+          value={weight}
+          onChangeText={setWeight}
         />
         <FormInput
           label="Altura (m)"
           placeholder="Ex: 1.70"
           keyboardType="numeric"
-          value={altura}
-          onChangeText={(text) => formataAltura(text)}
+          value={height}
+          onChangeText={(text) => formatHeight(text)}
         />
-        <GradientButton title="Calcular meu IMC" onPress={calcularIMC} />
+        <GradientButton title="Calcular meu IMC" onPress={showIMCResult} />
       </Card>
       <Card icon={ClipboardCheck} title="Resultado">
         {imc !== 0 ? (
-          <Text
-            style={[styles.calculator.imc, { color: imccolors[classificacao] }]}
-          >
+          <Text style={[styles.calculator.imc, { color: imcColor }]}>
             {imc}
           </Text>
         ) : (
           <Text>O resultado do cálculo do seu IMC irá aparecer aqui.</Text>
         )}
-        {classificacao !== "" && (
-          <Text style={styles.calculator.classificacao}>{classificacao}</Text>
+        {classification !== "" && (
+          <Text style={styles.calculator.classification}>{classification}</Text>
         )}
       </Card>
-      {pesoIdealMessage !== "" && (
+      {idealWeightMessage !== "" && (
         <Card
           icon={Lightbulb}
           iconColor={colors.accent}
           title="Dica"
           variant="secondary"
         >
-          <Text style={styles.calculator.pesoIdeal}>{pesoIdealMessage}</Text>
+          <Text style={styles.calculator.idealWeight}>
+            {idealWeightMessage}
+          </Text>
         </Card>
       )}
     </Content>
