@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Teste",
-    "slug": "Teste",
+    "name": "Meu IMC",
+    "slug": "MeuIMC",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "teste",
+    "scheme": "meuimc",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
