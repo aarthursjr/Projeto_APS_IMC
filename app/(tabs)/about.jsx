@@ -1,34 +1,35 @@
-import { Bulb, History, Info } from "lucide-react-native";
-import { ScrollView, Text } from "react-native";
+import { Info, Lightbulb } from "lucide-react-native";
+import { Text } from "react-native";
 import Card from "../../components/Card";
-import Header from "../../components/Header";
+import Content from "../../components/Content";
+import { colors } from "../../constants/theme";
 
 export default function About({ navigation }) {
   return (
-    <ScrollView>
-      <Header
-        image={"../assets/logo-64x64.png"}
-        title="Sobre"
-        subtitle="Saiba mais sobre o aplicativo"
-      />
-      <Card icon={Info} title="Como estou hoje">
+    <Content>
+      <Card icon={Info} title="Sobre">
+        <Text style={{ marginBottom: 10 }}>
+          O aplicativo <Text style={{ fontWeight: "bold" }}>Meu IMC</Text> foi
+          desenvolvido como parte da Atividade Prática Supervisionada (APS) da
+          disciplina Desenvolvimento de Aplicativos Móveis, da Universidade
+          Unicarioca.
+        </Text>
         <Text>
-          Calcule e acompanhe seu índice de massa corporal de forma fácil e
-          rápida.
+          Com uma interface simples e intuitiva, este aplicativo permite o
+          rápido cálculo e acompanhamento do Índice de Massa Corporal,
+          auxiliando você a monitorar sua saúde de forma prática e acessível.
         </Text>
       </Card>
-      <Card icon={History} title="Últimos registros">
-        <Text>
-          Calcule e acompanhe seu índice de massa corporal de forma fácil e
-          rápida.
-        </Text>
+      <Card
+        icon={Lightbulb}
+        iconColor={colors.accent}
+        title="Desenvolvido por"
+        variant="secondary"
+      >
+        <Text>• André Arthur da Silva Junior</Text>
+        <Text>• Daniel da Silva Granha</Text>
+        <Text>• Filipe Gomes Duarte</Text>
       </Card>
-      <Card icon={Bulb} title="Dica" variant="secondary">
-        <Text>
-          Calcule e acompanhe seu índice de massa corporal de forma fácil e
-          rápida.
-        </Text>
-      </Card>
-    </ScrollView>
+    </Content>
   );
 }

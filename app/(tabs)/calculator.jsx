@@ -3,13 +3,14 @@ import {
   ClipboardCheck,
   Lightbulb,
 } from "lucide-react-native";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Text } from "react-native";
 import Card from "../../components/Card";
 import Content from "../../components/Content";
 import FormInput from "../../components/FormInput";
 import GradientButton from "../../components/GradientButton";
 import { colors, styles } from "../../constants/theme";
+import { IMCContext } from "../../context/ImcContext";
 import {
   calculateIMC,
   classifyIMC,
@@ -20,10 +21,17 @@ import {
 export default function Calculator({ navigation }) {
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0);
-  const [imc, setImc] = useState(0);
+  const [imc, setIMC] = useState(0);
   const [classification, setClassification] = useState("");
   const [idealWeightMessage, setWeightIdealMessage] = useState("");
   const [imcColor, setImcColor] = useState("");
+  const { records, addRecord } = useContext(IMCContext);
+
+  useEffect(() => {
+    if (records.length > 0 && records[0].height && !height) {
+      setHeight(String(records[0].height));
+    }
+  }, [records]);
 
   function formatHeight(heightInput) {
     let value = heightInput.replace(/,/g, ".");
@@ -47,10 +55,11 @@ export default function Calculator({ navigation }) {
     const imc_color = getIMCColor(imc_value);
     const ideal_weight = getIdealWeight(imc_value, height);
 
-    setImc(imc_value);
+    setIMC(imc_value);
     setClassification(imc_class);
     setImcColor(imc_color);
     setWeightIdealMessage(ideal_weight);
+    addRecord({ weight, height });
   }
 
   return (

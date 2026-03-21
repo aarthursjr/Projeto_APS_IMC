@@ -17,6 +17,12 @@ function toPercent(value, start = min) {
 
 export default function Scale({ marker }) {
   const marker_color = getIMCColor(marker);
+  let marker_left = marker;
+  if (marker < min) {
+    marker_left = min;
+  } else if (marker > max) {
+    marker_left = max;
+  }
 
   return (
     <View style={styles.scale}>
@@ -58,7 +64,7 @@ export default function Scale({ marker }) {
       <View
         style={[
           styles.scaleMarker,
-          { left: toPercent(marker), backgroundColor: marker_color },
+          { left: toPercent(marker_left), backgroundColor: marker_color },
         ]}
       ></View>
     </View>

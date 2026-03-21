@@ -1,5 +1,7 @@
 import { colors } from "./theme";
 
+export const appKey = "meuimc";
+
 export const imc_ranges = [
   {
     max: 17,
