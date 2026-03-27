@@ -1,48 +1,79 @@
-import { createContext, useEffect, useState } from "react";
-import { getIMCRecords, saveIMCRecords } from "../services/imcStorage";
-import { calculateIMC } from "../utils/imc";
+import React, { createContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const IMCContext = createContext();
 
+const STORAGE_KEY = "@imc_records";
+
 export function IMCProvider({ children }) {
   const [records, setRecords] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadRecords();
   }, []);
 
   async function loadRecords() {
-    const data = await getIMCRecords();
-    // Ordena os registros por data decrescente (só pra garantir)
-    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    try {
+      const stored = await AsyncStorage.getItem(STORAGE_KEY);
 
-    setRecords(data);
-    setLoading(false);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+
+        // proteção contra dados inválidos
+        if (Array.isArray(parsed)) {
+          setRecords(parsed);
+        } else {
+          setRecords([]);
+        }
+      }
+    } catch (error) {
+      console.log("Erro ao carregar histórico:", error);
+    }
   }
 
-  async function addRecord({ weight, height }) {
-    setLoading(true);
-    const imc = calculateIMC(weight, height);
-    console.log(weight, height);
-    const newRecord = {
-      id: Date.now().toString(),
-      date: new Date().toISOString(),
-      weight,
-      height,
-      imc,
-    };
-    const updated = [newRecord, ...records];
+  useEffect(() => {
+    saveRecords(records);
+  }, [records]);
 
-    setRecords(updated);
-    await saveIMCRecords(updated).then(() => {
-      setLoading(false);
-      console.log(records);
-    });
+  async function saveRecords(data) {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (error) {
+      console.log("Erro ao salvar histórico:", error);
+    }
+  }
+
+  //Adicionar registro
+  function addRecord(newRecord) {
+    const recordWithId = {
+      ...newRecord,
+      id: newRecord.id || Date.now().toString(),
+    };
+
+    setRecords((prev) => [recordWithId, ...prev]); // mais recente primeiro
+  }
+
+  //Remover
+  function removeRecord(id) {
+    if (!id) return;
+
+    setRecords((prev) => prev.filter((item) => item.id !== id));
+  }
+
+  //Limpar
+  function clearRecords() {
+    setRecords([]);
   }
 
   return (
-    <IMCContext.Provider value={{ records, loading, addRecord }}>
+    <IMCContext.Provider
+      value={{
+        records,
+        addRecord,
+        removeRecord,
+        clearRecords,
+      }}
+    >
       {children}
     </IMCContext.Provider>
   );
