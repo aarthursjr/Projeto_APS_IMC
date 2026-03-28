@@ -32,14 +32,7 @@ export default function Calculator() {
 
   const { records, addRecord } = useContext(IMCContext);
 
-  // 🔄 Preenche altura com último valor usado
-  useEffect(() => {
-    if (records.length > 0 && records[0].height && !height) {
-      setHeight(String(records[0].height));
-    }
-  }, [records]);
-
-  // 📏 Formatar altura (1.75)
+//Formatar altura (1.75)
   function formatHeight(heightInput) {
     let value = heightInput.replace(/,/g, ".");
     value = value.replace(/[^0-9]/g, "");
@@ -56,7 +49,7 @@ export default function Calculator() {
     setHeight(value);
   }
 
-  // 🧠 Calcular IMC
+//Calcular IMC
   function showIMCResult() {
     const imc_value = calculateIMC(weight, height);
     const imc_class = classifyIMC(imc_value);
@@ -68,7 +61,6 @@ export default function Calculator() {
     setImcColor(imc_color);
     setWeightIdealMessage(ideal_weight);
 
-    // ✅ CORREÇÃO AQUI
     addRecord({
       weight,
       height,
@@ -80,7 +72,7 @@ export default function Calculator() {
 
   return (
     <Content>
-      {/* 📥 INPUT */}
+      {/* INPUT */}
       <Card icon={CalculatorIcon} title="Calculadora">
         <FormInput
           label="Peso (Kg)"
@@ -101,7 +93,7 @@ export default function Calculator() {
         <GradientButton title="Calcular meu IMC" onPress={showIMCResult} />
       </Card>
 
-      {/* 📊 RESULTADO */}
+      {/* RESULTADO */}
       <Card icon={ClipboardCheck} title="Resultado">
         {imc !== 0 ? (
           <Text style={[styles.calculator.imc, { color: imcColor }]}>
@@ -118,7 +110,7 @@ export default function Calculator() {
         )}
       </Card>
 
-      {/* 💡 DICA */}
+      {/* DICA */}
       {idealWeightMessage !== "" && (
         <Card
           icon={Lightbulb}
