@@ -1,10 +1,5 @@
 import { useContext } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 
 import Card from "../../components/Card";
 import Content from "../../components/Content";
@@ -13,12 +8,8 @@ import GradientButton from "../../components/GradientButton";
 import { colors } from "../../constants/theme";
 import { IMCContext } from "../../context/ImcContext";
 
-import {
-  Info,
-  History as HistoryIcon,
-  Bulb,
-  Trash2,
-} from "lucide-react-native";
+import { History as HistoryIcon, Lightbulb, Trash2 } from "lucide-react-native";
+import { getIMCColor } from "../../utils/imc";
 
 export default function History() {
   const { records, removeRecord, clearRecords } = useContext(IMCContext);
@@ -46,31 +37,20 @@ export default function History() {
 
     Alert.alert(
       "Detalhes do registro",
-      `Data: ${
-        item.date
-          ? new Date(item.date).toLocaleDateString()
-          : "Sem data"
-      }
+      `Data: ${item.date ? new Date(item.date).toLocaleString() : "Sem data"}
 
 Peso: ${item.weight ?? "-"} kg
 Altura: ${item.height ?? "-"} m
 IMC: ${item.imc ? Number(item.imc).toFixed(2) : "-"}
 Classificação: ${item.classification ?? "-"}`,
-      [{ text: "OK" }]
+      [{ text: "OK" }],
     );
   }
 
   return (
     <Content>
-      {/* INFO */}
-      <Card icon={Info} title="Como estou hoje">
-        <Text style={{ color: colors.textSecondary }}>
-          Seus registros aparecem abaixo.
-        </Text>
-      </Card>
-
       {/* HISTÓRICO */}
-      <Card icon={HistoryIcon} title="Últimos registros">
+      <Card icon={HistoryIcon} title="Histórico">
         {safeRecords.length === 0 ? (
           <Text style={{ textAlign: "center", color: colors.textTertiary }}>
             Nenhum histórico encontrado.
@@ -80,9 +60,13 @@ Classificação: ${item.classification ?? "-"}`,
             <GradientButton
               title="Limpar histórico"
               onPress={handleClear}
+              colorPrimary={colors.errorLighter}
+              colorSecondary={colors.errorLighter}
+              textColor={colors.error}
+              style={{ marginBottom: 24 }}
             />
 
-            {safeRecords.map((item) => {
+            {safeRecords.map((item, index) => {
               if (!item) return null;
 
               return (
@@ -94,10 +78,13 @@ Classificação: ${item.classification ?? "-"}`,
                   <View
                     style={{
                       backgroundColor: colors.surface,
-                      borderRadius: 12,
-                      padding: 14,
-                      marginBottom: 12,
-                      elevation: 2,
+                      paddingBottom: index < safeRecords.length - 1 ? 12 : 0,
+                      marginBottom: index < safeRecords.length - 1 ? 12 : 0,
+                      borderBottomWidth: 1,
+                      borderBottomColor:
+                        index < safeRecords.length - 1
+                          ? colors.textDimmed
+                          : "transparent",
                     }}
                   >
                     {/* TOPO */}
@@ -105,14 +92,15 @@ Classificação: ${item.classification ?? "-"}`,
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-between",
-                        alignItems: "center",
+                        alignItems: "flex-end",
                         marginBottom: 8,
                       }}
                     >
                       <Text
                         style={{
                           fontSize: 14,
-                          color: colors.textTertiary,
+                          fontWeight: 600,
+                          color: colors.textPrimary,
                         }}
                       >
                         {item.date
@@ -125,16 +113,16 @@ Classificação: ${item.classification ?? "-"}`,
                         style={{
                           flexDirection: "row",
                           alignItems: "center",
-                          backgroundColor: colors.error,
+                          backgroundColor: colors.errorLighter,
                           paddingVertical: 6,
                           paddingHorizontal: 10,
-                          borderRadius: 8,
+                          borderRadius: 5,
                         }}
                       >
-                        <Trash2 size={14} color="#fff" />
+                        <Trash2 size={14} color={colors.error} />
                         <Text
                           style={{
-                            color: "#fff",
+                            color: colors.error,
                             fontSize: 12,
                             fontWeight: "bold",
                             marginLeft: 4,
@@ -147,14 +135,9 @@ Classificação: ${item.classification ?? "-"}`,
 
                     {/* DADOS */}
                     {[
-                      ["Peso", `${item.weight ?? "-"} kg`],
-                      ["Altura", `${item.height ?? "-"} m`],
-                      [
-                        "IMC",
-                        item.imc
-                          ? Number(item.imc).toFixed(2)
-                          : "-",
-                      ],
+                      ["Peso", `${item.weight ?? "-"}kg`],
+                      ["Altura", `${item.height ?? "-"}m`],
+                      ["IMC", item.imc ? Number(item.imc).toFixed(2) : "-"],
                       ["Classificação", item.classification ?? "-"],
                     ].map(([label, value], index) => (
                       <View
@@ -162,7 +145,7 @@ Classificação: ${item.classification ?? "-"}`,
                         style={{
                           flexDirection: "row",
                           justifyContent: "space-between",
-                          marginBottom: 4,
+                          marginBottom: 2,
                         }}
                       >
                         <Text style={{ color: colors.textSecondary }}>
@@ -170,10 +153,10 @@ Classificação: ${item.classification ?? "-"}`,
                         </Text>
                         <Text
                           style={{
-                            fontWeight: "bold",
+                            fontWeight: 600,
                             color:
                               label === "IMC"
-                                ? colors.primary
+                                ? getIMCColor(value)
                                 : colors.textPrimary,
                           }}
                         >
@@ -190,9 +173,10 @@ Classificação: ${item.classification ?? "-"}`,
       </Card>
 
       {/* DICA */}
-      <Card icon={Bulb} title="Dica" variant="secondary">
+      <Card icon={Lightbulb} title="Dica" variant="secondary">
         <Text style={{ color: colors.textSecondary }}>
-          Manter histórico ajuda a acompanhar sua saúde ao longo do tempo.
+          Verifique sempre seu histórico para acompanhar sua saúde ao longo do
+          tempo.
         </Text>
       </Card>
     </Content>

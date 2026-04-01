@@ -13,5 +13,7 @@ export const styles = {
     fontSize: 24,
     backgroundColor: colors.primaryLighter,
     borderRadius: 8,
+    color: colors.textPrimary,
+    placeholderTextColor: colors.textDimmed,
   },
 };
