@@ -17,8 +17,10 @@ import { classifyIMC, getIMCColor } from "../../utils/imc";
 
 export default function HomeScreen({ navigation }) {
   const { records } = useContext(IMCContext);
-  const imc = records[0] ? records[0].imc : 0;
-  const lastRecords = records.slice(0, 5);
+  const safeRecords = Array.isArray(records) ? records.filter(Boolean) : [];
+
+  const imc = safeRecords[0]?.imc ?? 0;
+  const lastRecords = safeRecords.slice(0, 5);
 
   function renderRank(current, previous) {
     if (current < previous) {
@@ -32,27 +34,30 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <Content>
+      {/* COMO ESTOU HOJE */}
       <Card icon={Gauge} title="Como estou hoje">
         {imc > 0 ? (
           <>
             <Scale marker={imc} />
+
             <Text
               style={{
                 fontSize: 24,
                 fontWeight: "bold",
                 textAlign: "center",
-                color: getIMCColor(imc),
+                color: getIMCColor(Number(imc) || 0),
               }}
             >
-              {imc}
+              {Number(imc).toFixed(2)}
             </Text>
+
             <Text
               style={{
                 textAlign: "center",
                 color: colors.textSecondary,
               }}
             >
-              {classifyIMC(imc)}
+              {classifyIMC(Number(imc) || 0)}
             </Text>
           </>
         ) : (
@@ -62,9 +67,12 @@ export default function HomeScreen({ navigation }) {
           </Text>
         )}
       </Card>
+
+      {/* ÚLTIMOS REGISTROS */}
       <Card icon={History} title="Últimos registros">
         {imc > 0 ? (
           <>
+            {/* CABEÇALHO */}
             <View
               style={{
                 width: "100%",
@@ -86,42 +94,57 @@ export default function HomeScreen({ navigation }) {
               </Text>
               <Text style={{ flex: 1 }} />
             </View>
-            {lastRecords.map((record, index) => (
-              <View
-                key={index}
-                style={{
-                  flexDirection: "row",
-                  gap: 10,
-                  alignItems: "center",
-                  borderBottomWidth: 1,
-                  borderBottomColor: colors.textDimmed,
-                  paddingVertical: 6,
-                }}
-              >
-                <Text style={{ flex: 4, fontSize: 14 }}>
-                  {new Date(record.date).toLocaleDateString()}
-                </Text>
-                <Text style={{ flex: 2, fontSize: 14 }}>{record.weight}Kg</Text>
-                <Text
+
+            {/* LISTA */}
+            {lastRecords.map((record, index) => {
+              if (!record) return null;
+
+              const nextRecord = lastRecords[index + 1];
+
+              return (
+                <View
+                  key={record.id ?? index}
                   style={{
-                    flex: 2,
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: getIMCColor(record.imc),
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                    borderBottomWidth: 1,
+                    borderBottomColor: colors.textDimmed,
+                    paddingVertical: 6,
                   }}
                 >
-                  {record.imc}
-                </Text>
-                <Text style={{ flex: 1, textAlign: "right" }}>
-                  {renderRank(
-                    record.imc,
-                    lastRecords.length < 5 && index === lastRecords.length - 1
-                      ? record.imc
-                      : records[index + 1].imc,
-                  )}
-                </Text>
-              </View>
-            ))}
+                  <Text style={{ flex: 4, fontSize: 14 }}>
+                    {record.date
+                      ? new Date(record.date).toLocaleDateString()
+                      : "Sem data"}
+                  </Text>
+
+                  <Text style={{ flex: 2, fontSize: 14 }}>
+                    {record.weight ?? "-"}Kg
+                  </Text>
+
+                  <Text
+                    style={{
+                      flex: 2,
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: getIMCColor(Number(record.imc) || 0),
+                    }}
+                  >
+                    {record.imc
+                      ? Number(record.imc).toFixed(2)
+                      : "-"}
+                  </Text>
+
+                  <Text style={{ flex: 1, textAlign: "right" }}>
+                    {renderRank(
+                      Number(record.imc) || 0,
+                      nextRecord ? Number(nextRecord.imc) || 0 : Number(record.imc) || 0
+                    )}
+                  </Text>
+                </View>
+              );
+            })}
           </>
         ) : (
           <Text>
@@ -130,6 +153,8 @@ export default function HomeScreen({ navigation }) {
           </Text>
         )}
       </Card>
+
+      {/* DICA */}
       <Card
         icon={Lightbulb}
         iconColor={colors.accent}
